@@ -44,32 +44,39 @@ public class AllSortImplementationClass implements AllSortAlogorithms
 	}
 
 
-	public int[] MergeSort(int[] array,int l,int h) {
+	public void MergeSort(int[] array,int l,int h) {
 		//1.Calculate the middle of array
+
 		if(l<h) {
 			int mid=(l+h)/2;
 			MergeSort(array, l, mid);
 			MergeSort(array, mid+1, h);
-			MergeArray(array, l, h, mid);
+			
+			MergeArray(array, l, mid, h);
 		}
 		
-		return array;
+		PrintArray(array);
 	}
 
-	@Override
-	public int[] QuickSort(int[] array) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public void QuickSort(int[] array,int low ,int high  ) {
+		if(low<high)
+		{
+			int pi=Partition(array, low, high);
+			QuickSort(array, low,pi-1);
+			QuickSort(array, pi+1, high);
+		}
+		
 	}
 
 	@Override
 	public void PrintArray(int[] array) {
 		for (int i = 0; i < array.length; i++) {
-			System.out.print(array[i]);
+			System.out.print(array[i] +"\t");
 		}
 	}
 	
-	public static int[] MergeArray(int [] array,int l,int h,int mid) {
+	public static void MergeArray(int [] array,int l,int mid,int h) {
 		//find the length of two array
 		int leftArrayLength=mid-l+1;
 		int rightArrayLength=h-mid;
@@ -86,10 +93,58 @@ public class AllSortImplementationClass implements AllSortAlogorithms
 		}
 		
 		
+		// initialize indexes
+		int i = 0, j = 0; 
+		int k=l;
+		while(i<leftArrayLength&&j<rightArrayLength) {
+			if(leftArray[i]<=rightArray[j]) {
+				array[k]=leftArray[i];
+				i++;
+			}
+			else
+			{
+				array[k]=rightArray[j];
+				j++;
+			}
+			k++;
+		}
 		
+		//Copy remaining elements
+		  while (i < leftArrayLength) 
+	        { 
+	            array[k] = leftArray[i]; 
+	            i++; 
+	            k++; 
+	        } 
+	  
+	        /* Copy remaining elements of R[] if any */
+	        while (j < rightArrayLength) 
+	        { 
+	            array[k] = rightArray[j]; 
+	            j++; 
+	            k++; 
+	        } 
 		
-		
-		return array;
-	}
+			}
 
+	public static int Partition(int [] array,int low,int high) {
+		
+		int pivoteElement=array[high];
+		int i=(low-1);
+		
+		
+		for (int j = 0; j < array.length; j++) {
+			if(array[j]<pivoteElement) {
+				i++;
+				int temp=array[i];
+				array[j]=array[i];
+				array[i]=temp;
+			}
+			
+		}
+		int temp=array[i+1];
+		array[i+1]=array[high];
+		array[high]=temp;
+		return i+1;
+	}
 }

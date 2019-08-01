@@ -46,7 +46,7 @@ public static void main(String[] args) {
         
         for (i = 1; i <= n; i++) 
         { 
-        	  System.out.println(f2);
+        	System.out.println(f2);
             int next = f1 + f2; 
             f1 = f2; 
             f2 = next; 
